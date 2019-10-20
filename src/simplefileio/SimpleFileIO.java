@@ -2,6 +2,9 @@ package simplefileio;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class SimpleFileIO {
 	
@@ -30,23 +33,14 @@ public class SimpleFileIO {
 			IS 300 4dr manual
 			Forester X
 			*/
-			if (myString.contains("dr")) {
-				String[] myLineArr = myString.split(" ");
-				for (int i=0; i< myLineArr.length;i++) {
-					if (myLineArr[i].contains("dr")) {
-						String tmpStr = myLineArr[i];
-						System.out.println("into action" + tmpStr);
-						char[] myChars = tmpStr.toCharArray();
-						for (int j=0;j<myChars.length;j++ ) {
-							if (myChars[j] < 57) {
-								retVal=myChars[j]-48;
-							}
-						}
-					}
-					
-				}
-				
+			String pattern = "([1-8]{1})dr";
+			Pattern p = Pattern.compile(pattern);
+			Matcher m = p.matcher(filename);
+			if (m.find()) {
+				System.out.println(m.group(0));
+				retVal = Integer.parseInt(m.group(0));
 			}
+
 			return retVal;
 			
 		}
